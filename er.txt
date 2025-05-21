@@ -1,0 +1,5 @@
+run
+git add er.txt
+
+git status
+
