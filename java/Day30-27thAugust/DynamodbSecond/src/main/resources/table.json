@@ -1,0 +1,27 @@
+{
+  "TableName": "BooksCatalog",
+  "KeySchema": [
+    {
+      "AttributeName": "BookId",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "Author",
+      "KeyType": "RANGE"
+    }
+  ],
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "BookId",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "Author",
+      "AttributeType": "S"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 5,
+    "WriteCapacityUnits": 5
+  }
+}
