@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+           http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example</groupId>
+    <artifactId>dax-demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <!-- AWS SDK v1 DynamoDB version -->
+        <aws.sdk.v1.version>1.12.680</aws.sdk.v1.version>
+        <!-- The DAX client version you installed locally -->
+        <amazon.dax.client.version>1.0.223045.0</amazon.dax.client.version>
+    </properties>
+
+    <dependencies>
+        <!-- AWS SDK v1 for DynamoDB (includes the v2 package names com.amazonaws.services.dynamodbv2) -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>${aws.sdk.v1.version}</version>
+        </dependency>
+
+        <!-- (Optional) If you use Document API classes explicitly -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-core</artifactId>
+            <version>${aws.sdk.v1.version}</version>
+        </dependency>
+
+        <!-- DAX client - THIS JAR is typically not on Maven Central.
+             You must have installed it to your local Maven repo with:
+             mvn install:install-file -Dfile="path\to\AmazonDAXClient-1.0.223045.0.jar" \
+                                      -DgroupId=com.amazonaws -DartifactId=amazon-dax-client \
+                                      -Dversion=1.0.223045.0 -Dpackaging=jar
+        -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>amazon-dax-client</artifactId>
+            <version>${amazon.dax.client.version}</version>
+        </dependency>
+
+        <!-- SLF4J simple logger to avoid logging implementation errors -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Compiler plugin -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Exec plugin to run your main class: set mainClass when running -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <!-- override at command-line with -Dexec.mainClass=... or edit here -->
+                    <mainClass>org.example.DaxClientExample</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
